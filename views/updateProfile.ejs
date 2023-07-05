@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Profile</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <!-- updateProfile.ejs -->
+
+    <h1>Update Profile</h1>
+    <div class="container">
+      <form
+        class="needs-validation"
+        action="/profile/update"
+        method="POST"
+        novalidate
+      >
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            value="<%= name %>"
+            required
+          />
+          <div class="invalid-feedback">Please provide a name.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="dateOfBirth">Date of Birth:</label>
+          <input
+            type="date"
+            class="form-control"
+            id="dateOfBirth"
+            name="dateOfBirth"
+            value="<%= dateOfBirth %>"
+            required
+          />
+          <div class="invalid-feedback">
+            Please provide a valid date of birth.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            value="<%= email %>"
+            required
+          />
+          <div class="invalid-feedback">Please provide a valid email.</div>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+      </form>
+    </div>
+  </body>
+</html>

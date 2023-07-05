@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { ObjectId } = require('mongodb');
 
+
 // Login route
 router.get('/login', (req, res) => {
-    console.log(req)
   res.render('login');
 });
 
@@ -14,7 +14,6 @@ router.post('/login', async (req, res) => {
     try {
         // Perform authentication logic here (replace with your own logic)
         const user = await req.app.locals.db.collection("users").findOne({email: email})
-        console.log(`🚀 ~ file: auth.js:16 ~ router.post ~ user:`, user)
       if (user && user.password === password) {
         // Store user information in session
         req.session.user = {

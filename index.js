@@ -1,7 +1,9 @@
 const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const MongoDBStore = require('connect-mongodb-session')(session);
 const { MongoClient } = require('mongodb');
+
 
 const app = express();
 const port = 3000;
@@ -26,6 +28,16 @@ app.use(express.static(__dirname + '/public'));
 const uri = 'mongodb://0.0.0.0:27017/user_dashboard_db';
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const store = new MongoDBStore({
+    uri: uri,
+    databaseName: 'user_dashboard_db',
+    collection: 'sessions',
+  });
+  
+  store.on('error', (error) => {
+    console.error('Session store error:', error);
+  });
+
 
 async function connectToMongo() {
     try {
@@ -47,8 +59,23 @@ const passwordRoutes = require('./routes/password');
 
 //
 const isAuthenticated = (req, res, next) => {
-    (req.session.user) ? (req.app.locals.db = client.db(), next()) : res.redirect('/login');
-};
+    if (req.session.user) {
+      req.app.locals.db = client.db();
+      next();
+    } else {
+      res.redirect('/login');
+    }
+  };
+  
+
+app.use(
+  session({
+    secret: 'bug',
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+  })
+);
 
 // Share the MongoDB client instance with routes
 app.use((req, res, next) => {
