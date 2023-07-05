@@ -10,18 +10,12 @@ router.get('/login', (req, res) => {
 
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
-
     try {
         // Perform authentication logic here (replace with your own logic)
         const user = await req.app.locals.db.collection("users").findOne({email: email})
       if (user && user.password === password) {
         // Store user information in session
-        req.session.user = {
-          _id: user._id,
-          name: user.name,
-          dateOfBirth: user.dateOfBirth,
-          email: user.email
-        };
+        req.session.user = {...user};
         return res.redirect('/profile');
       }
   

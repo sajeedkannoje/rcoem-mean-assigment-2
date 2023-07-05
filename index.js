@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const { MongoClient } = require('mongodb');
 
-
 const app = express();
 const port = 3000;
 
@@ -84,10 +83,10 @@ app.use((req, res, next) => {
     next();
   });
 
-app.use('/', authRoutes);
+  app.use('/', authRoutes);
+  app.use('/', registrationRoutes);
 app.use('/profile',isAuthenticated, profileRoutes);
 app.use('/password',isAuthenticated, passwordRoutes);
-app.use('/register',isAuthenticated, registrationRoutes);
 
 
 // Start the server
