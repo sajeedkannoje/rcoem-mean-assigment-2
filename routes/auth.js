@@ -5,7 +5,7 @@ const { ObjectId } = require('mongodb');
 
 // Login route
 router.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login', { error: null });
 });
 
 router.post('/login', async (req, res) => {
@@ -18,7 +18,6 @@ router.post('/login', async (req, res) => {
         req.session.user = {...user};
         return res.redirect('/profile');
       }
-  
       res.render('login', { error: 'Invalid email or password' });
     } catch (err) {
       console.error('Error during login:', err);
@@ -30,7 +29,6 @@ router.post('/login', async (req, res) => {
 router.get('/logout', (req, res) => {
   // Clear user session
   req.session.user = null;
-
   res.redirect('/login');
 });
 
