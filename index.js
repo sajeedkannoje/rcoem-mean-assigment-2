@@ -55,7 +55,6 @@ async function connectToMongo() {
 const authRoutes = require('./routes/auth');
 const registrationRoutes = require('./routes/register');
 const profileRoutes = require('./routes/profile');
-const passwordRoutes = require('./routes/password');
 
 //
 const isAuthenticated = (req, res, next) => {
@@ -86,7 +85,6 @@ app.use((req, res, next) => {
   app.use('/', authRoutes);
   app.use('/', registrationRoutes);
 app.use('/profile',isAuthenticated, profileRoutes);
-app.use('/password',isAuthenticated, passwordRoutes);
 
 
 // Start the server
